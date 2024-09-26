@@ -1,9 +1,11 @@
-*
+#*
 !.gitignore
 !**/Makefile
 !**/source/
 !**/source/**
 !3ds/hello_world/hello_world.3dsx
-!**/*.3dsx
+**/*.elf
+**/*.smdh
+**/build/**
 
 **/source/*.o
