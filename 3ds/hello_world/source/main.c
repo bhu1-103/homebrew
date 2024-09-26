@@ -22,10 +22,10 @@ int main(int argc, char **argv)
 	printf("hmmmmmmm\n");
 
 	consoleSelect(&bottomScreen);
-	printf(RED "even", GREEN "more", BLUE "hmmmmm");
+	printf(WHITE "even more hmmmmm");
 
 	consoleSelect(&topScreen);
-	printf("");
+	printf(RED "this text is in RED");
 
 	while (aptMainLoop())
 	{
