@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	printf("hmmmmmmm\n");
 
 	consoleSelect(&bottomScreen);
-	printf(WHITE "even more hmmmmm");
+	printf("\x1b[20;12Heven more hmmmmm"); //12 because bototm screen has 40 rows and 40-16/2 = 24
 
 	consoleSelect(&topScreen);
 	printf(RED "blood...\n");
