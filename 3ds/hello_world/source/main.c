@@ -25,7 +25,12 @@ int main(int argc, char **argv)
 	printf(WHITE "even more hmmmmm");
 
 	consoleSelect(&topScreen);
-	printf(RED "this text is in RED");
+	printf(RED "blood...\n");
+	printf(GREEN "green\n");
+	printf(YELLOW "yellow\n");
+	printf(BLUE "blue\n");
+	printf(MAGENTA "magenta\n");
+	printf(CYAN "cyan\n");
 
 	while (aptMainLoop())
 	{
