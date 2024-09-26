@@ -3,7 +3,6 @@
 !**/Makefile
 !**/source/
 !**/source/**
-!**/*.3dsx
+!3ds/hello_world/*.3dsx
 
-**/*.3ds
 **/source/*.o
