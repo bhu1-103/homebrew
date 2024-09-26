@@ -2,10 +2,8 @@
 list of homebrew programs made by me
 
 ## setting up ftp
-- `pcmanfm ftp://192.168.31.166:5000` #ip address of 3ds.
-
-But doing this all the time manually is tiring. So, I follow a different method.
-
+- `pcmanfm ftp://192.168.31.166:5000` #ip address of 3ds. <br>
+But doing this all the time manually is tiring. So, I follow a different method. <br>
 `sudo pacman -S curlftpfs` #curl ftp file system.
 
 
