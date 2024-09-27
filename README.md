@@ -21,8 +21,8 @@ But doing this all the time manually is tiring. So, I follow a different method.
 ## psp [luaplayer++]
 - [x] basic 2d (partial)
 
-## 3ds [maybe devkitpro]
-- [x] hello world
+## 3ds [[devkitpro]](https://github.com/bhu1-103/homebrew/tree/main/3ds)
+- [x] [hello world](https://github.com/bhu1-103/homebrew/tree/main/3ds/hello_world)
 - [ ] basic 2d and 3d
 
 will upload source files soon...
