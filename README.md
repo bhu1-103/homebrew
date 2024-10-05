@@ -1,5 +1,10 @@
 # homebrew
-list of homebrew programs made by me
+## list of homebrew programs made by me
+
+## INSTALLATION
+- 3DS [devkit pro](https://devkitpro.org/)
+- - add repo `https://pkg.devkitpro.org/packages` and `https://pkg.devkitpro.org/packages/linux/$arch/`
+- - `sudo pacman -S 3ds-dev`
 
 ## setting up ftp
 - `pcmanfm ftp://192.168.31.166:5000` #ip address of 3ds. <br>
