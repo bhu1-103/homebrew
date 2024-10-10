@@ -24,9 +24,14 @@ static void sceneRender(float size)
 {
 	// Draw static text strings
 	//float text2PosX = 400.0f - 16.0f - g_staticText[2].width*0.75f; // right-justify
-	C2D_DrawText(&g_staticText[0], C2D_AtBaseline, 20.0f, 020.0f, 0.5f, size, size);
-	C2D_DrawText(&g_staticText[1], C2D_AtBaseline, 120.0f, 120.0f, 0.5f, size, size);
-	C2D_DrawText(&g_staticText[2], C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size, size);
+	u32 color0 = C2D_Color32(0xFF, 0x00, 0x00, 0xFF);
+	u32 color1 = C2D_Color32(0x00, 0xFF, 0x00, 0xFF);
+	u32 color2 = C2D_Color32(0x00, 0x00, 0xFF, 0xFF);
+	u32 color3 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
+	C2D_DrawText(&g_staticText[0], C2D_WithColor | C2D_AtBaseline, 020.0f, 020.0f, 0.5f, size, size, color0);
+	C2D_DrawText(&g_staticText[1], C2D_WithColor | C2D_AtBaseline, 120.0f, 120.0f, 0.5f, size, size, color1);
+	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size, size, color2);
+	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size/2, size/2, color3);
 }
 
 static void sceneExit(void)
@@ -68,7 +73,7 @@ int main()
 
 		// Render the scene
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, C2D_Color32(0xFF, 0x00, 0x66, 0xFF));
+		C2D_TargetClear(top, C2D_Color32(0x00, 0x00, 0x00, 0xFF));
 		C2D_SceneBegin(top);
 		sceneRender(size);
 		C3D_FrameEnd(0);
