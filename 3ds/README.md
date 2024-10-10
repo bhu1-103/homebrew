@@ -5,5 +5,6 @@
 - bottom screen has 30 rows and 40 columns
 
 # [Custom Font](https://github.com/bhu1-103/homebrew/tree/main/3ds/custom-font/)
+![3ds custom font](custom-font/image.jpeg)
 - Can load any standard .ttf font.
 - position of the text can be adjusted.

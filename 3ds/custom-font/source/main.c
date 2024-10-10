@@ -6,16 +6,19 @@
 
 C2D_TextBuf g_staticBuf;
 C2D_Text g_staticText[3];
-C2D_Font font[3];
+C2D_Font font[5];
 
 static void sceneInit(void)
 {
 	g_staticBuf  = C2D_TextBufNew(4096); // support up to 4096 glyphs in the buffer
-	font[2] = C2D_FontLoad("romfs:/liberationitalic.bcfnt");
+	font[1] = C2D_FontLoad("romfs:/Hurmit.bcfnt");
+	font[2] = C2D_FontLoad("romfs:/JetBrains.bcfnt");
+	font[3] = C2D_FontLoad("romfs:/Gohu.bcfnt");
+	font[4] = C2D_FontLoad("romfs:/ComicSans.bcfnt");
 
-	C2D_TextFontParse(&g_staticText[0], font[2], g_staticBuf, "we got da");
-	C2D_TextFontParse(&g_staticText[1], font[2], g_staticBuf, "COMIC SANS");
-	C2D_TextFontParse(&g_staticText[2], font[2], g_staticBuf, "on da 3ds");
+	C2D_TextFontParse(&g_staticText[0], font[3], g_staticBuf, "we got da");
+	C2D_TextFontParse(&g_staticText[1], font[4], g_staticBuf, "comic sans");
+	C2D_TextFontParse(&g_staticText[2], font[1], g_staticBuf, "on da 3ds");
 
 	C2D_TextOptimize(&g_staticText[2]);
 }
@@ -28,10 +31,10 @@ static void sceneRender(float size)
 	u32 color1 = C2D_Color32(0x00, 0xFF, 0x00, 0xFF);
 	u32 color2 = C2D_Color32(0x00, 0x00, 0xFF, 0xFF);
 	u32 color3 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
-	C2D_DrawText(&g_staticText[0], C2D_WithColor | C2D_AtBaseline, 020.0f, 020.0f, 0.5f, size, size, color0);
-	C2D_DrawText(&g_staticText[1], C2D_WithColor | C2D_AtBaseline, 120.0f, 120.0f, 0.5f, size, size, color1);
-	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size, size, color3);
-	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size, size, color2);
+	C2D_DrawText(&g_staticText[0], C2D_WithColor | C2D_AtBaseline, 020.0f, 040.0f, 0.5f, size, size, color0);
+	C2D_DrawText(&g_staticText[1], C2D_WithColor | C2D_AtBaseline, 120.0f, 140.0f, 0.5f, size, size, color1);
+	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 240.0f, 0.5f, size, size, color3);
+	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 240.0f, 0.5f, size, size, color2);
 }
 
 static void sceneExit(void)
