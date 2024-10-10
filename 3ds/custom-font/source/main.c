@@ -30,8 +30,8 @@ static void sceneRender(float size)
 	u32 color3 = C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF);
 	C2D_DrawText(&g_staticText[0], C2D_WithColor | C2D_AtBaseline, 020.0f, 020.0f, 0.5f, size, size, color0);
 	C2D_DrawText(&g_staticText[1], C2D_WithColor | C2D_AtBaseline, 120.0f, 120.0f, 0.5f, size, size, color1);
+	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size, size, color3);
 	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size, size, color2);
-	C2D_DrawText(&g_staticText[2], C2D_WithColor | C2D_AtBaseline, 220.0f, 220.0f, 0.5f, size/2, size/2, color3);
 }
 
 static void sceneExit(void)
