@@ -13,4 +13,4 @@
 - [x] Can send dpad input.
 - [x] Face buttons.
 - [x] L,R Shoulder buttons
-- [ ] C stick input.
+- [ ] Circle pad input.
