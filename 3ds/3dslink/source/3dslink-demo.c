@@ -102,7 +102,12 @@ int main(int argc, char **argv) {
 		if (kDown & KEY_RIGHT) {
 			printf("Pressed RIGHT!\n");
 		}
-
+		if (kDown & KEY_L) {
+			printf("Pressed L!\n");
+		}
+		if (kDown & KEY_R) {
+			printf("Pressed R!\n");
+		}
 	}
 
 	close(sock);
