@@ -12,4 +12,5 @@
 # [remote control](https://github.com/bhu1-103/homebrew/tree/main/3ds/3dslink/)
 - [x] Can send dpad input.
 - [x] Face buttons.
+- [x] L,R Shoulder buttons
 - [ ] C stick input.
