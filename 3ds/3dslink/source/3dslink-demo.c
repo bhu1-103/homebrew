@@ -85,22 +85,22 @@ int main(int argc, char **argv) {
 			printf("Pressed B!\n");
 		}
 		if (kDown & KEY_X) {
-			printf("Pressed B!\n");
+			printf("Pressed X!\n");
 		}
 		if (kDown & KEY_Y) {
-			printf("Pressed B!\n");
+			printf("Pressed Y!\n");
 		}
 		if (kDown & KEY_UP) {
-			printf("Pressed A!\n");
+			printf("Pressed UP!\n");
 		}
 		if (kDown & KEY_DOWN) {
-			printf("Pressed B!\n");
+			printf("Pressed DOWN!\n");
 		}
 		if (kDown & KEY_LEFT) {
-			printf("Pressed B!\n");
+			printf("Pressed LEFT!\n");
 		}
 		if (kDown & KEY_RIGHT) {
-			printf("Pressed B!\n");
+			printf("Pressed RIGHT!\n");
 		}
 
 	}
