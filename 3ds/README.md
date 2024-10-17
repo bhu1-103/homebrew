@@ -8,3 +8,8 @@
 ![3ds custom font](custom-font/image.jpeg)
 - Can load any standard .ttf font.
 - position of the text can be adjusted.
+
+# [remote control](https://github.com/bhu1-103/homebrew/tree/main/3ds/3dslink/)
+- [x] Can send dpad input.
+- [x] Face buttons.
+- [ ] C stick input.
