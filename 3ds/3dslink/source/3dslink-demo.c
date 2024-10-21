@@ -47,9 +47,7 @@ int main(int argc, char **argv) {
 
 	consoleInit(GFX_TOP, NULL);
 
-	printf ("\nlibctru 3dslink demo\n\n");
-
-	printf ("\nstart 3dslink with -s to see printf output on host\n\n");
+	printf ("\nhmm, try mashin some buttons\n\n");
 
 	// allocate buffer for SOC service
 	SOC_buffer = (u32*)memalign(SOC_ALIGN, SOC_BUFFERSIZE);
@@ -76,7 +74,7 @@ int main(int argc, char **argv) {
 		gspWaitForVBlank();
 		hidScanInput();
 
-		u32 kDown = hidKeysDown();
+		u32 kDown = hidKeysHeld();
 		if (kDown & KEY_START) break;
 		if (kDown & KEY_A) {
 			printf("Pressed A!\n");
