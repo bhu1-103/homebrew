@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
 		gspWaitForVBlank();
 		hidScanInput();
 
-		u32 kDown = hidKeysHeld();
+		u32 kDown = hidKeysDown();
 		if (kDown & KEY_START) break;
 		if (kDown & KEY_A) {
 			printf("Pressed A!\n");
