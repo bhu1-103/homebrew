@@ -13,6 +13,7 @@ int main(){
 	glLoadIdentity();
 	
 	for (;;) {
+
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		glBegin(GL_QUADS);
@@ -27,6 +28,7 @@ int main(){
 		glEnd();
 		
 		vglSwapBuffers(GL_FALSE);
+
 	}
 	
 	vglEnd();
