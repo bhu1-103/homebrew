@@ -1,5 +1,5 @@
 TITLEID     := VGLIMMMDE
-TARGET		:= $(notdir $(CURDIR))
+TARGET		:= immediate_mode
 SOURCES		:= .
 			
 INCLUDES	:= include
