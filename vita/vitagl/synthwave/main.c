@@ -21,13 +21,20 @@ int main(){
 		sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG);
 		SceCtrlData pad;
 		sceCtrlPeekBufferPositive(0, &pad, 1);
-		povX += ((pad.lx-128.0f) / 128.0f) * 0.1f; //lx -> left stick x
-		povY += ((pad.ly-128.0f) / 128.0f) * 0.1f; //ly -> left stick y
+		if(pad.lx<136 && pad.lx>120)
+		{
+			povX += ((pad.lx-128.0f) / 128.0f) * 0.1f;
+		}
+		if(pad.ly<136 && pad.ly>120)
+		{
+			povY += ((pad.ly-128.0f) / 128.0f) * 0.1f;
+		}
 		if (pad.buttons & SCE_CTRL_TRIANGLE){povZ += 0.1f;}
 		if (pad.buttons & SCE_CTRL_CROSS)   {povZ -= 0.1f;}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
+		glLineWidth(2.0f);
 		gluLookAt(povX,povY,3.0f+povZ,
 				  0.0f,0.0f,0.0f,
 				  0.0f,1.0f,0.0f
