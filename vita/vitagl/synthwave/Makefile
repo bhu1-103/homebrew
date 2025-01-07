@@ -1,5 +1,5 @@
 TITLEID     := VGLIMMMDE
-TARGET		:= immediate_mode
+TARGET		:= synthwave
 SOURCES		:= .
 			
 INCLUDES	:= include
