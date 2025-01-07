@@ -2,6 +2,7 @@
 #define SYNTHWAVE_H
 
 #include <vitaGL.h>
+#include <vitasdk.h>
 #define HALF_PI 3.14159265/2 //dont ask why
 
 //extern const int circle_resolution;
