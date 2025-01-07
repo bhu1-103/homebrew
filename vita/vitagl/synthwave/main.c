@@ -20,10 +20,8 @@ int main(){
 	for (;;) {
 		SceCtrlData pad;
 		sceCtrlPeekBufferPositive(0, &pad, 1);
-		if (pad.buttons & SCE_CTRL_LEFT)    {povX -= 0.1f;}
-		if (pad.buttons & SCE_CTRL_RIGHT)   {povX += 0.1f;}
-		if (pad.buttons & SCE_CTRL_UP)      {povY += 0.1f;}
-		if (pad.buttons & SCE_CTRL_DOWN)    {povY -= 0.1f;}
+		povX += (pad.lx / 255.0f) * 0.1f; //lx -> left stick x
+		povY += (pad.ly / 255.0f) * 0.1f; //ly -> left stick y
 		if (pad.buttons & SCE_CTRL_TRIANGLE){povZ += 0.1f;}
 		if (pad.buttons & SCE_CTRL_CROSS)   {povZ -= 0.1f;}
 
