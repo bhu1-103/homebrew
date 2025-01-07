@@ -21,11 +21,11 @@ int main(){
 		sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG);
 		SceCtrlData pad;
 		sceCtrlPeekBufferPositive(0, &pad, 1);
-		if(pad.lx<136 && pad.lx>120)
+		if(!(pad.lx<136 && pad.lx>120))
 		{
 			povX += ((pad.lx-128.0f) / 128.0f) * 0.1f;
 		}
-		if(pad.ly<136 && pad.ly>120)
+		if(!(pad.ly<136 && pad.ly>120))
 		{
 			povY += ((pad.ly-128.0f) / 128.0f) * 0.1f;
 		}
