@@ -7,7 +7,7 @@ const int sun_distance_far = 20;
 
 void draw_grid()
 {
-	glLineWidth(0.2f);
+	glLineWidth(1.0f);
 	for(float i=-2.0;i<2.0;i+=0.2)
 	{
 		for(float j=-2.0;j<2.0;j+=0.2)

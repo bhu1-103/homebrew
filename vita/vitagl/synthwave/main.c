@@ -20,12 +20,12 @@ int main(){
 	for (;;) {
 		SceCtrlData pad;
 		sceCtrlPeekBufferPositive(0, &pad, 1);
-		if (pad.buttons & SCE_CTRL_LEFT)  {povX -= 0.1f;}
-		if (pad.buttons & SCE_CTRL_RIGHT) {povX += 0.1f;}
-		if (pad.buttons & SCE_CTRL_UP)    {povY += 0.1f;}
-		if (pad.buttons & SCE_CTRL_DOWN)  {povY -= 0.1f;}
-		if (pad.buttons & SCE_CTRL_R1)     {povZ += 0.1f;}
-		if (pad.buttons & SCE_CTRL_L1)     {povZ -= 0.1f;}
+		if (pad.buttons & SCE_CTRL_LEFT)    {povX -= 0.1f;}
+		if (pad.buttons & SCE_CTRL_RIGHT)   {povX += 0.1f;}
+		if (pad.buttons & SCE_CTRL_UP)      {povY += 0.1f;}
+		if (pad.buttons & SCE_CTRL_DOWN)    {povY -= 0.1f;}
+		if (pad.buttons & SCE_CTRL_TRIANGLE){povZ += 0.1f;}
+		if (pad.buttons & SCE_CTRL_CROSS)   {povZ -= 0.1f;}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
