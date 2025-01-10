@@ -1,0 +1,16 @@
+# Simple pyramid
+o Pyramid
+
+# Vertices
+v 0.0 0.0 0.0   # Base vertex 1
+v 1.0 0.0 0.0   # Base vertex 2
+v 1.0 0.0 1.0   # Base vertex 3
+v 0.0 0.0 1.0   # Base vertex 4
+v 0.5 1.0 0.5   # Apex vertex
+
+# Faces
+f 1 2 5  # Side face 1
+f 2 3 5  # Side face 2
+f 3 4 5  # Side face 3
+f 4 1 5  # Side face 4
+f 1 2 3 4  # Base face
