@@ -21,7 +21,7 @@ But doing this all the time manually is tiring. So, I follow a different method.
 - [ ] doom-like
 
 ## psp [pspdsk]
-- [x] console (partial)
+- [x] console print (partial)
 
 ## psp [luaplayer++]
 - [x] basic 2d (partial)
@@ -29,6 +29,7 @@ But doing this all the time manually is tiring. So, I follow a different method.
 ## 3ds [[devkitpro]](https://github.com/bhu1-103/homebrew/tree/main/3ds)
 - [x] [hello world](https://github.com/bhu1-103/homebrew/tree/main/3ds/hello_world)
 - [ ] basic 2d and 3d
+      
 # vita 
 
 ## vitasdk
