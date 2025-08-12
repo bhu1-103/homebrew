@@ -1,3 +1,6 @@
-*
-
-!.gitignore
+7z.dll
+7z.exe
+build.bat
+eboot_safe.bin
+eboot_unsafe.bin
+vita-mksfoex.exe
