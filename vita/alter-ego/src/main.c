@@ -11,21 +11,64 @@
 #include "debugScreen.h"
 
 #define printf psvDebugScreenPrintf
-
-#define SERVER_IP "192.168.0.104" //will fix later
+#define MAX_COMMANDS 32
+#define SERVER_IP "192.168.0.104"
 #define SERVER_PORT 2012
+#define CONTROL_PORT 2013
 #define NET_PARAM_MEM_SIZE (1*1024*1024)
 
-#define MAX_VU 32
+#define MAX_VU 50
+
+typedef struct {
+    uint32_t button_mask;
+    const char *cmd;
+} ButtonCmd;
+
+const char *commands[MAX_COMMANDS] = {
+    "CMD:toggle music",
+    "CMD:previous song",
+    "CMD:next song",
+    "CMD:shut up",
+    "CMD:today",
+    "CMD:lock screen",
+    "CMD:files",
+    "CMD:what time is it",
+    "CMD:screenshot",
+    "CMD:volume up",
+    "CMD:volume down",
+    "CMD:open firefox",
+    "WAKE",
+    "CONFIRM"
+};
+int command_count = 14;
+int current_command = 0;
+
+ButtonCmd button_cmds[] = {
+    /*{SCE_CTRL_CROSS, "CONFIRM"},*/
+    {SCE_CTRL_CIRCLE, "CMD:shut up"},
+    {SCE_CTRL_TRIANGLE, "WAKE"},
+    {SCE_CTRL_SQUARE, "CMD:toggle music"},
+    {SCE_CTRL_LEFT, "CMD:previous song"},
+    {SCE_CTRL_RIGHT, "CMD:next song"},
+    /*{SCE_CTRL_L, "LEFT_REL"},
+    {SCE_CTRL_R, "RIGHT_REL"}, //to cycle certain commands in a string array */
+};
+
+void send_cmd(SceNetSockaddrIn *server_addr, int sock, const char *cmd) {
+    sceNetSendto(sock, cmd, strlen(cmd), 0,
+                 (SceNetSockaddr*)server_addr, sizeof(*server_addr));
+}
 
 int main(int argc, char *argv[]) {
     int sfd;
+    int control_sock;
     SceNetSockaddrIn server_addr;
+    SceNetSockaddrIn server_ctrl_addr;
     SceNetInitParam net_init_param;
+    SceCtrlData ctrl, oldCtrl;
+    memset(&oldCtrl, 0, sizeof(oldCtrl));
 
     psvDebugScreenInit();
-    printf("Streaming mic to %s:%d via UDP...\n", SERVER_IP, SERVER_PORT);
-    printf("Up/Down: VU sensitivity | START: Toggle mic | SELECT: Quit\n\n");
 
     // Init networking
     sceSysmoduleLoadModule(SCE_SYSMODULE_NET);
@@ -37,19 +80,23 @@ int main(int argc, char *argv[]) {
 
     // Create UDP socket
     sfd = sceNetSocket("mic_socket", SCE_NET_AF_INET, SCE_NET_SOCK_DGRAM, 0);
+    control_sock = sceNetSocket("ctrl_socket", SCE_NET_AF_INET, SCE_NET_SOCK_DGRAM, 0);
 
+    //audio stream socket
     server_addr.sin_family = SCE_NET_AF_INET;
     server_addr.sin_port = sceNetHtons(SERVER_PORT);
     sceNetInetPton(SCE_NET_AF_INET, SERVER_IP, &server_addr.sin_addr);
+    
+    //controls socket
+    server_ctrl_addr.sin_family = SCE_NET_AF_INET;
+    server_ctrl_addr.sin_port = sceNetHtons(CONTROL_PORT);
+    sceNetInetPton(SCE_NET_AF_INET, SERVER_IP, &server_ctrl_addr.sin_addr);
 
     // Open mic
     int freq = 16000;
     int grain = 256;
     int port = sceAudioInOpenPort(SCE_AUDIO_IN_PORT_TYPE_VOICE, grain, freq, SCE_AUDIO_IN_PARAM_FORMAT_S16_MONO);
     short *audioIn = (short*)malloc(sizeof(short) * grain);
-
-    SceCtrlData ctrl, oldCtrl;
-    memset(&oldCtrl, 0, sizeof(oldCtrl));
 
     int sensitivity = 3;
     int mic_enabled = 1;  // mic enabled by default
@@ -76,6 +123,27 @@ int main(int argc, char *argv[]) {
         } else {
             memset(audioIn, 0, sizeof(short) * grain);  // mute
         }
+
+        for (int i = 0; i < sizeof(button_cmds)/sizeof(button_cmds[0]); i++) {
+            if ((ctrl.buttons & button_cmds[i].button_mask) && 
+                !(oldCtrl.buttons & button_cmds[i].button_mask)) {
+                send_cmd(&server_ctrl_addr, control_sock, button_cmds[i].cmd);
+            }
+        }
+
+        //cycle all the commands
+        if ((ctrl.buttons & SCE_CTRL_LTRIGGER) && !(oldCtrl.buttons & SCE_CTRL_LTRIGGER)) {  //the greatest feature of all time
+            current_command--;
+            if (current_command < 0) current_command = command_count - 1;
+        }
+        if ((ctrl.buttons & SCE_CTRL_RTRIGGER) && !(oldCtrl.buttons & SCE_CTRL_RTRIGGER)) {
+            current_command++;
+            if (current_command >= command_count) current_command = 0;
+        }
+        if ((ctrl.buttons & SCE_CTRL_CROSS) && !(oldCtrl.buttons & SCE_CTRL_CROSS)) {
+            send_cmd(&server_ctrl_addr,control_sock, commands[current_command]);
+        }
+
 
         // Compute simple average for VU meter
         int average = 0;
@@ -107,7 +175,11 @@ int main(int argc, char *argv[]) {
         }
         psvDebugScreenSetBgColor(0xFF000000);
 
-        printf("\nMic is %s | Sensitivity = %d\n\n", mic_enabled ? "ENABLED" : "MUTED", sensitivity);
+        printf("Streaming mic to %s:%d via UDP...\n", SERVER_IP, SERVER_PORT);
+        printf("Mic is %s | Sensitivity = %d\n\n", mic_enabled ? "    ENABLED     " : "      MUTED     ", sensitivity);
+        printf("Up/Down: VU sensitivity | START: Toggle mic | SELECT: Quit\n\n");
+        printf("Selected Command: %-20s\n", commands[current_command]);
+        printf("Press X to execute command");
 
         memcpy(&oldCtrl, &ctrl, sizeof(SceCtrlData));
         sceKernelDelayThread(10000);
