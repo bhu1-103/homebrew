@@ -4,6 +4,8 @@
 #include <psp2/ctrl.h>
 #include <psp2/net/net.h>
 #include <psp2/sysmodule.h>
+#include <psp2/io/fcntl.h>
+#include <psp2/io/stat.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -12,10 +14,12 @@
 
 #define printf psvDebugScreenPrintf
 #define MAX_COMMANDS 32
-#define SERVER_IP "192.168.0.104"
+//#define SERVER_IP "192.168.0.104"
 #define SERVER_PORT 2012
 #define CONTROL_PORT 2013
 #define NET_PARAM_MEM_SIZE (1*1024*1024)
+#define CONFIG_FILE "ux0:data/alter-ego/config.txt"
+#define MAX_IP_LEN 32
 
 #define MAX_VU 50
 
@@ -59,6 +63,27 @@ void send_cmd(SceNetSockaddrIn *server_addr, int sock, const char *cmd) {
                  (SceNetSockaddr*)server_addr, sizeof(*server_addr));
 }
 
+int read_ip_from_config(char *ip_buffer, size_t buf_size)
+{
+    SceUID fd = sceIoOpen(CONFIG_FILE, SCE_O_RDONLY, 0);
+    if (fd < 0) {printf("config file not found");return -1;}
+    int bytes_read = sceIoRead(fd, ip_buffer, buf_size - 1);
+    sceIoClose(fd);
+    
+    if (bytes_read <= 0){printf("failed to read ip from config"); return -2;}
+    ip_buffer[bytes_read] = '\0'; //wow, okay
+    for (int i = 0; i < bytes_read; i++) 
+    {
+        if (ip_buffer[i] == '\n' || ip_buffer[i] == '\r')
+        {
+            ip_buffer[i] = '\0';
+            break;
+        }
+    }
+    return 0;
+}
+
+
 int main(int argc, char *argv[]) {
     int sfd;
     int control_sock;
@@ -69,6 +94,14 @@ int main(int argc, char *argv[]) {
     memset(&oldCtrl, 0, sizeof(oldCtrl));
 
     psvDebugScreenInit();
+
+    char SERVER_IP[MAX_IP_LEN];
+    if (read_ip_from_config(SERVER_IP, sizeof(SERVER_IP)) < 0)
+    {
+        printf("create %s with ip address of laptop/pc\n", CONFIG_FILE);
+        return 1;
+    }
+    printf("Server IP: %s\n",SERVER_IP);
 
     // Init networking
     sceSysmoduleLoadModule(SCE_SYSMODULE_NET);
@@ -102,7 +135,7 @@ int main(int argc, char *argv[]) {
     int mic_enabled = 1;  // mic enabled by default
 
     printf("\e[s"); // save cursor position
-
+    
     while (1) {
         sceCtrlPeekBufferPositive(0, &ctrl, 1);
 
@@ -149,7 +182,8 @@ int main(int argc, char *argv[]) {
         int average = 0;
         int audioInMax = 1; // prevent div by zero
         for (int i = 0; i < grain; i++) {
-            int val = audioIn[i] < 0 ? 0 : audioIn[i];
+            int val = abs(audioIn[i]);
+            //int val = audioIn[i] < 0 ? 0 : audioIn[i];
             average += val;
             if (audioInMax < val) audioInMax = val;
         }
@@ -159,7 +193,7 @@ int main(int argc, char *argv[]) {
 
         // Draw VU meter top-to-bottom
         printf("\e[u"); // restore cursor
-        for (int i = MAX_VU-1; i >= 0; i--) {
+        /*for (int i = MAX_VU-1; i >= 0; i--) {
             printf("\e[7G"); // col 7
             if (i >= MAX_VU - average) {
                 if (i < MAX_VU / 2)
@@ -173,18 +207,18 @@ int main(int argc, char *argv[]) {
             }
             printf("           \n");
         }
-        psvDebugScreenSetBgColor(0xFF000000);
+        psvDebugScreenSetBgColor(0xFF000000);*/
 
-        printf("Streaming mic to %s:%d via UDP...\n", SERVER_IP, SERVER_PORT);
-        printf("Mic is %s | Sensitivity = %d\n\n", mic_enabled ? "    ENABLED     " : "      MUTED     ", sensitivity);
-        printf("Up/Down: VU sensitivity | START: Toggle mic | SELECT: Quit\n\n");
+        //printf("Streaming mic to %s:%d via UDP...\n", SERVER_IP, SERVER_PORT);
+        //printf("Mic is %s | Sensitivity = %d\n\n", mic_enabled ? "    ENABLED     " : "      MUTED     ", sensitivity);
+        //printf("Up/Down: VU sensitivity | START: Toggle mic | SELECT: Quit\n\n");
         printf("Selected Command: %-20s\n", commands[current_command]);
         printf("Press X to execute command");
 
         memcpy(&oldCtrl, &ctrl, sizeof(SceCtrlData));
         sceKernelDelayThread(10000);
 
-        if (ctrl.buttons & SCE_CTRL_SELECT) break;
+        if ( ((ctrl.buttons & SCE_CTRL_SELECT) & !(oldCtrl.buttons & SCE_CTRL_SELECT)) & ((ctrl.buttons & SCE_CTRL_DOWN) & !(oldCtrl.buttons & SCE_CTRL_DOWN)) ) break;
     }
 
     free(audioIn);
