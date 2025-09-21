@@ -34,8 +34,12 @@ int main() {
         SceCtrlData pad;
         sceCtrlPeekBufferPositive(0, &pad, 1);
 
+        float deadzone = 16.0f;
         float rx = pad.rx - 128.0f;
         float ry = pad.ry - 128.0f;
+
+        if (fabs(rx) < deadzone) rx = 0.0f;
+        if (fabs(ry) < deadzone) ry = 0.0f;
 
         yaw   += rx * lookSpeed / 128.0f;
         pitch += -ry * lookSpeed / 128.0f;
@@ -46,12 +50,11 @@ int main() {
         float frontX, frontY, frontZ;
         getFrontVector(&frontX, &frontY, &frontZ);
 
-        float deadzone = 16.0f;
         float lx = pad.lx - 128.0f;
         float ly = pad.ly - 128.0f;
 
-        if (fabs(lx) < deadzone) lx == 0.0f;
-        if (fabs(ly) < deadzone) ly == 0.0f;
+        if (fabs(lx) < deadzone) lx = 0.0f;
+        if (fabs(ly) < deadzone) ly = 0.0f;
 
         camX += frontX * (-ly / 128.0f) * moveSpeed;
         camY = 1.0f;//+= frontY * (ly / 128.0f) * moveSpeed;
