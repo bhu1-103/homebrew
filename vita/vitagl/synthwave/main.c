@@ -46,8 +46,12 @@ int main() {
         float frontX, frontY, frontZ;
         getFrontVector(&frontX, &frontY, &frontZ);
 
+        float deadzone = 16.0f;
         float lx = pad.lx - 128.0f;
         float ly = pad.ly - 128.0f;
+
+        if (fabs(lx) < deadzone) lx == 0.0f;
+        if (fabs(ly) < deadzone) ly == 0.0f;
 
         camX += frontX * (-ly / 128.0f) * moveSpeed;
         camY = 1.0f;//+= frontY * (ly / 128.0f) * moveSpeed;
