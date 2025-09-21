@@ -7,18 +7,18 @@ const int sun_distance_far = 20;
 
 void draw_grid()
 {
-	glColor3f(1.0f,0.0f,1.0f);
-	for(float i=-2.0;i<2.0;i+=0.2)
-	{
-		glBegin(GL_LINES); //vertical lines
-			glVertex3f(i,-2,0);
-			glVertex3f(i,+2,0);
-		glEnd();
+    float size = 20.0f;
+    float step = 1.0f;
+    glColor3f(1.0f,0.0f,1.0f);
 
-		glBegin(GL_LINES); //horizontal lines
-			glVertex3f(-2,i,0);
-			glVertex3f(+2,i,0);
-		glEnd();
+    for(float i=-size; i<=size; i+=step)
+    {
+        glBegin(GL_LINES);
+        glVertex3f(i, 0.0f, -size);
+        glVertex3f(i, 0.0f,  size);
 
-	}
+        glVertex3f(-size, 0.0f, i);
+        glVertex3f( size, 0.0f, i);
+        glEnd();
+    }
 }
