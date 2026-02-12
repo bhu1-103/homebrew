@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<livearea style="a1" format-ver="01.00" content-rev="1">
+
+    <background>
+        <image>bg.png</image>
+    </background>
+
+    <gate>
+        <startup-image>startup.png</startup-image>
+    </gate>
+
+    <frame id="frame1" width="840" height="500">
+        <liveitem>
+            <image x="20" y="20" width="470" height="140">logo0.png</image>
+        </liveitem>
+    </frame>
+
+    <frame id="frame2" width="840" height="500">
+        <liveitem>
+            <text x="40" y="100" angle="-5" align="left">
+                <str size="38" bold="on" shadow="on" color="#FFFFFF">ALTER EGO</str>
+            </text>
+            <text x="40" y="150" angle="-5" align="left">
+                <str size="28" color="#FFFFFF">ブヴァンの・オールター・イーゴー</str>
+            </text>
+        </liveitem>
+    </frame>
+
+    <frame id="frame3" width="840" height="500">
+        <liveitem>
+            <image x="50" y="380" width="200" height="62">logo1.png</image>
+            <target>https://bhu1.xyz/</target>  
+        </liveitem>
+    </frame>
+
+    <frame id="frame4" width="840" height="500">
+        <liveitem>
+            <text x="500" y="420" align="right">
+                <str size="42" color="#ff1315" bold="on" shadow="on">SYSTEM_CRITICAL</str>
+            </text>
+            <text x="500" y="470" align="right">
+                <str size="18" color="#ff1315">DO NOT ATTEMPT ACCESS</str>
+            </text>
+        </liveitem>
+    </frame>
+
+</livearea>
